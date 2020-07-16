@@ -28,10 +28,11 @@ class WeeklyChart extends StatelessWidget {
       }
 
       return {
-        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'day':
+            DateFormat.E('pt_BR').format(weekDay).substring(0, 1).toUpperCase(),
         'amount': totalSum
       };
-    });
+    }).reversed.toList();
   }
 
   bool _isSameDate(Transaction transaction, DateTime weekDay) {
