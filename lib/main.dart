@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './mainTheme.dart';
 import './model/transaction.model.dart';
@@ -10,11 +10,20 @@ import './widgets/weekly_chart.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('pt_BR');
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [const Locale('pt', 'BR')],
       title: 'Me poupe!',
       theme: MainTheme().themeData,
       home: MyHomePage(),
@@ -40,12 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addTransaction(String titleValue, double amountValue) {
+  void _addTransaction(
+      String titleValue, double amountValue, DateTime dateValue) {
     final newTransaction = Transaction(
         id: DateTime.now().toString(),
         amount: amountValue,
         title: titleValue,
-        date: DateTime.now());
+        date: dateValue);
 
     setState(() {
       this._transactions.add(newTransaction);

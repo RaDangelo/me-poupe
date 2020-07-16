@@ -17,7 +17,7 @@ class Expenses extends StatelessWidget {
           ? Column(
               children: <Widget>[
                 Text(
-                  'No transactions added yet!',
+                  'Nenhuma compra incluída!',
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(
