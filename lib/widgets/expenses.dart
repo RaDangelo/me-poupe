@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../model/transaction.dart';
+import '../model/transaction.model.dart';
 
 class Expenses extends StatelessWidget {
   final List<Transaction> transactions;
@@ -11,55 +11,56 @@ class Expenses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 590,
-      child: ListView.builder(
-        itemBuilder: (ctx, index) {
-          return Card(
-            child: Row(
+      height: 400,
+      child: transactions.isEmpty
+          ? Column(
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
-                  decoration: BoxDecoration(
-                      // borderRadius: BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(
-                    color: Theme.of(context).primaryColor,
-                    width: 2,
-                  )),
-                  child: Text(
-                    'R\$ ${transactions[index].amount.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                  ),
+                Text(
+                  'No transactions added yet!',
+                  style: Theme.of(context).textTheme.headline6,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      transactions[index].title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Text(
-                      DateFormat.yMMMMd('pt_BR')
-                          .format(transactions[index].date),
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  height: 200,
+                  child: Image.asset(
+                    'assets/images/waiting.png',
+                    fit: BoxFit.cover,
+                  ),
                 )
               ],
+            )
+          : ListView.builder(
+              itemBuilder: (ctx, index) {
+                return Container(
+                  child: Card(
+                    elevation: 5,
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: FittedBox(
+                              child: Text(
+                            'R\$${transactions[index].amount}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                        ),
+                      ),
+                      title: Text(transactions[index].title,
+                          style: Theme.of(context).textTheme.headline6),
+                      subtitle: Text(DateFormat.yMMMMd('pt_BR')
+                          .format(transactions[index].date)),
+                      trailing:
+                          IconButton(onPressed: null, icon: Icon(Icons.delete)),
+                    ),
+                  ),
+                );
+              },
+              itemCount: transactions.length,
             ),
-          );
-        },
-        itemCount: transactions.length,
-      ),
     );
   }
 }

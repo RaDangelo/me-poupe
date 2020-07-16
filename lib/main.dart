@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import './mainTheme.dart';
-
-import './model/transaction.dart';
-
+import './model/transaction.model.dart';
+import './mock/transaction.mock.dart';
 import './widgets/transaction_input.dart';
 import './widgets/expenses.dart';
 import './widgets/weekly_chart.dart';
@@ -30,6 +29,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = TransactionMock().getTransactions();
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((element) {
+      return element.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addTransaction(String titleValue, double amountValue) {
     final newTransaction = Transaction(
@@ -74,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            WeeklyChart(),
+            WeeklyChart(_recentTransactions),
             Expenses(_transactions),
           ],
         ),

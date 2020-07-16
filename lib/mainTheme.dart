@@ -4,8 +4,8 @@ class MainTheme {
   ThemeData get themeData {
     return ThemeData(
         fontFamily: 'Quicksand',
-        primarySwatch: Colors.pink,
-        accentColor: Colors.pinkAccent,
+        primarySwatch: Colors.teal,
+        accentColor: Colors.tealAccent,
         textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
               fontFamily: 'OpenSans',
@@ -19,6 +19,6 @@ class MainTheme {
                     fontSize: 20,
                     fontWeight: FontWeight.w600))),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
-            foregroundColor: Colors.white, backgroundColor: Colors.pink));
+            foregroundColor: Colors.white, backgroundColor: Colors.teal));
   }
 }
