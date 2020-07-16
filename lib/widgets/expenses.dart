@@ -11,7 +11,7 @@ class Expenses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 390,
+      height: 590,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
           return Card(
@@ -26,7 +26,7 @@ class Expenses extends StatelessWidget {
                   decoration: BoxDecoration(
                       // borderRadius: BorderRadius.all(Radius.circular(10)),
                       border: Border.all(
-                    color: Colors.primaries[8],
+                    color: Theme.of(context).primaryColor,
                     width: 2,
                   )),
                   child: Text(
@@ -34,7 +34,7 @@ class Expenses extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.primaries[8],
+                      color: Theme.of(context).primaryColorDark,
                     ),
                   ),
                 ),
@@ -43,10 +43,7 @@ class Expenses extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       transactions[index].title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     Text(
                       DateFormat.yMMMMd('pt_BR')

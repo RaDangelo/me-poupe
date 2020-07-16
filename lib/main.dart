@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import './mainTheme.dart';
+
 import './model/transaction.dart';
 
 import './widgets/transaction_input.dart';
@@ -14,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     initializeDateFormatting('pt_BR');
     return MaterialApp(
-      title: 'Me poupe\$!',
+      title: 'Me poupe!',
+      theme: MainTheme().themeData,
       home: MyHomePage(),
     );
   }
@@ -26,80 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Tênis novos',
-      amount: 72.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't4',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't5',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't6',
-      title: 'Remédios p/ dor de Cabeça',
-      amount: 25.52,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _transactions = TransactionMock().getTransactions();
 
   void _addTransaction(String titleValue, double amountValue) {
     final newTransaction = Transaction(
@@ -130,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Me poupe\$!'),
-        backgroundColor: Colors.primaries[8],
+        title: Text('Me Poupe\$!'),
+        backgroundColor: Theme.of(context).primaryColor,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -152,7 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Colors.primaries[8],
         onPressed: () => _toggleTransactionInput(context),
       ),
     );

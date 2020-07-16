@@ -11,7 +11,7 @@ class WeeklyChart extends StatelessWidget {
       width: double.infinity,
       height: 10,
       child: Card(
-        color: Colors.primaries[8],
+        color: Theme.of(context).primaryColorLight,
         child: Text(''),
         elevation: 5,
       ),
