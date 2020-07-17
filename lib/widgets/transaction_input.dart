@@ -50,46 +50,55 @@ class _TransactionInputState extends State<TransactionInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: _titleController,
-              onSubmitted: (_) => _submitData(),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: _amountController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => _submitData(),
-            ),
-            Container(
-              height: 70,
-              child: Row(children: <Widget>[
-                Text(_selectedDate == null
-                    ? 'Selecione uma data:'
-                    : 'Data selecionada: ${DateFormat.yMd('pt_BR').format(_selectedDate)}'),
-                IconButton(
-                  icon: Icon(
-                    Icons.date_range,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: _showDatePicker,
-                )
-              ]),
-            ),
-            RaisedButton(
-              child: Text('Incluir'),
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).textTheme.button.color,
-              onPressed: _submitData,
-            ),
-          ],
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                controller: _titleController,
+                onSubmitted: (_) => _submitData(),
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: _amountController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => _submitData(),
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(_selectedDate == null
+                          ? 'Selecione uma data:'
+                          : 'Data selecionada: ${DateFormat.yMd('pt_BR').format(_selectedDate)}'),
+                      IconButton(
+                        icon: Icon(
+                          Icons.date_range,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        onPressed: _showDatePicker,
+                      )
+                    ]),
+              ),
+              RaisedButton(
+                child: Text('Incluir'),
+                color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: _submitData,
+              ),
+            ],
+          ),
         ),
       ),
     );
