@@ -43,28 +43,24 @@ class WeeklyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 160,
-      child: Card(
-        elevation: 6,
-        margin: EdgeInsets.all(18),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: _groupedTransactionValues.map((element) {
-              return Expanded(
-                child: ChartBar(
-                  element['day'],
-                  element['amount'],
-                  _totalSpending == 0.0
-                      ? 0.0
-                      : (element['amount'] as double) / _totalSpending,
-                ),
-              );
-            }).toList(),
-          ),
+    return Card(
+      elevation: 6,
+      margin: EdgeInsets.all(16),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: _groupedTransactionValues.map((element) {
+            return Expanded(
+              child: ChartBar(
+                element['day'],
+                element['amount'],
+                _totalSpending == 0.0
+                    ? 0.0
+                    : (element['amount'] as double) / _totalSpending,
+              ),
+            );
+          }).toList(),
         ),
       ),
     );
