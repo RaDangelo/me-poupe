@@ -11,13 +11,15 @@ class Expenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Theme.of(context);
+
     return transactions.isEmpty
         ? LayoutBuilder(builder: (ctx, constraints) {
             return Column(
               children: <Widget>[
                 Text(
                   'Nenhuma compra incluída!',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: _theme.textTheme.headline6,
                 ),
                 SizedBox(
                   height: 30,
@@ -51,15 +53,22 @@ class Expenses extends StatelessWidget {
                       ),
                     ),
                     title: Text(transactions[index].title,
-                        style: Theme.of(context).textTheme.headline6),
+                        style: _theme.textTheme.headline6),
                     subtitle: Text(DateFormat.yMMMMd('pt_BR')
                         .format(transactions[index].date)),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      color: Theme.of(context).errorColor,
-                      onPressed: () =>
-                          deleteTransaction(transactions[index].id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 460
+                        ? FlatButton.icon(
+                            textColor: _theme.errorColor,
+                            onPressed: () =>
+                                deleteTransaction(transactions[index].id),
+                            icon: Icon(Icons.delete),
+                            label: Text('Excluir'))
+                        : IconButton(
+                            icon: Icon(Icons.delete),
+                            color: _theme.errorColor,
+                            onPressed: () =>
+                                deleteTransaction(transactions[index].id),
+                          ),
                   ),
                 ),
               );

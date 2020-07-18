@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:me_poupe/widgets/adaptive_flat_button.dart';
 
 class TransactionInput extends StatefulWidget {
   final Function addTransaction;
@@ -50,6 +52,8 @@ class _TransactionInputState extends State<TransactionInput> {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Theme.of(context);
+
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
@@ -76,27 +80,20 @@ class _TransactionInputState extends State<TransactionInput> {
               ),
               Container(
                 height: 70,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(_selectedDate == null
-                          ? 'Selecione uma data:'
-                          : 'Data selecionada: ${DateFormat.yMd('pt_BR').format(_selectedDate)}'),
-                      IconButton(
-                        icon: Icon(
-                          Icons.date_range,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: _showDatePicker,
-                      )
-                    ]),
+                child: Row(children: <Widget>[
+                  Text(_selectedDate == null
+                      ? 'Selecione uma data:'
+                      : 'Data selecionada: ${DateFormat.yMd('pt_BR').format(_selectedDate)}'),
+                  IconButton(
+                    icon: Icon(
+                      Icons.date_range,
+                      color: _theme.primaryColor,
+                    ),
+                    onPressed: _showDatePicker,
+                  )
+                ]),
               ),
-              RaisedButton(
-                child: Text('Incluir'),
-                color: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).textTheme.button.color,
-                onPressed: _submitData,
-              ),
+              AdaptiveFlatButton('Incluir', _submitData)
             ],
           ),
         ),

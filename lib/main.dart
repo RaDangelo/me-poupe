@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -87,72 +90,105 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final _mediaQuery = MediaQuery.of(context);
+    final _theme = Theme.of(context);
+    final _isLandscape = _mediaQuery.orientation == Orientation.landscape;
+    final _appTitle = 'Me Poupe\$!';
 
-    final appBar = AppBar(
-      title: Text('Me Poupe\$!'),
-      backgroundColor: Theme.of(context).primaryColor,
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _toggleTransactionInput(context),
-        )
-      ],
-    );
+    final PreferredSizeWidget _appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text(_appTitle),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                GestureDetector(
+                  child: Icon(CupertinoIcons.add),
+                  onTap: () => _toggleTransactionInput(context),
+                ),
+              ],
+            ),
+          )
+        : AppBar(
+            title: Text(_appTitle),
+            backgroundColor: _theme.primaryColor,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => _toggleTransactionInput(context),
+              )
+            ],
+          );
 
-    final expensesWidget = Container(
-        height: (MediaQuery.of(context).size.height -
-                appBar.preferredSize.height -
-                MediaQuery.of(context).padding.top) *
+    final _expensesWidget = Container(
+        height: (_mediaQuery.size.height -
+                _appBar.preferredSize.height -
+                _mediaQuery.padding.top) *
             0.7,
         child: Expenses(_transactions, _deleteTransaction));
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final _switchChartWidget = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'Mostrar Gráfico',
+          style: _theme.textTheme.headline6,
+        ),
+        Switch.adaptive(
+            activeColor: _theme.accentColor,
+            value: _showChart,
+            onChanged: (val) {
+              setState(() => _showChart = val);
+            })
+      ],
+    );
+
+    final _portraitChartWidget = Container(
+      height: (_mediaQuery.size.height -
+              _appBar.preferredSize.height -
+              _mediaQuery.padding.top) *
+          0.3,
+      child: WeeklyChart(_recentTransactions),
+    );
+
+    final _landscapeChartWidget = Container(
+        height: (_mediaQuery.size.height -
+                _appBar.preferredSize.height -
+                _mediaQuery.padding.top) *
+            0.7,
+        child: WeeklyChart(_recentTransactions));
+
+    final _body = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Mostrar Gráfico'),
-                  Switch(
-                      value: _showChart,
-                      onChanged: (val) {
-                        setState(() => _showChart = val);
-                      })
-                ],
-              ),
-            if (!isLandscape)
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.3,
-                child: WeeklyChart(_recentTransactions),
-              ),
-            if (!isLandscape) expensesWidget,
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      height: (MediaQuery.of(context).size.height -
-                              appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
-                          0.7,
-                      child: WeeklyChart(_recentTransactions))
-                  : expensesWidget
+            if (_isLandscape) _switchChartWidget,
+            if (!_isLandscape) _portraitChartWidget,
+            if (!_isLandscape) _expensesWidget,
+            if (_isLandscape)
+              _showChart ? _landscapeChartWidget : _expensesWidget
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _toggleTransactionInput(context),
-      ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: _body,
+            navigationBar: _appBar,
+          )
+        : Scaffold(
+            appBar: _appBar,
+            body: _body,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () => _toggleTransactionInput(context),
+                  ),
+          );
   }
 }
