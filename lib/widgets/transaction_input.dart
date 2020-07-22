@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:me_poupe/widgets/adaptive_flat_button.dart';
+
+import '../widgets/adaptive_flat_button.dart';
 
 class TransactionInput extends StatefulWidget {
   final Function addTransaction;
@@ -52,8 +53,6 @@ class _TransactionInputState extends State<TransactionInput> {
 
   @override
   Widget build(BuildContext context) {
-    final _theme = Theme.of(context);
-
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
@@ -68,14 +67,15 @@ class _TransactionInputState extends State<TransactionInput> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               TextField(
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
                 controller: _titleController,
                 onSubmitted: (_) => _submitData(),
               ),
               TextField(
-                decoration: InputDecoration(labelText: 'Amount'),
+                decoration: const InputDecoration(labelText: 'Amount'),
                 controller: _amountController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 onSubmitted: (_) => _submitData(),
               ),
               Container(
@@ -87,7 +87,7 @@ class _TransactionInputState extends State<TransactionInput> {
                   IconButton(
                     icon: Icon(
                       Icons.date_range,
-                      color: _theme.primaryColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                     onPressed: _showDatePicker,
                   )

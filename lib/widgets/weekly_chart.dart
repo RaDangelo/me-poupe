@@ -5,9 +5,9 @@ import '../widgets/chart_bar.dart';
 import '../model/transaction.model.dart';
 
 class WeeklyChart extends StatelessWidget {
-  final List<Transaction> recentTransactions;
+  final List<Transaction> _recentTransactions;
 
-  WeeklyChart(this.recentTransactions);
+  const WeeklyChart(this._recentTransactions);
 
   double get _totalSpending {
     return _groupedTransactionValues.fold(
@@ -21,7 +21,7 @@ class WeeklyChart extends StatelessWidget {
       );
       var totalSum = 0.0;
 
-      for (var tx in recentTransactions) {
+      for (var tx in _recentTransactions) {
         if (_isSameDate(tx, weekDay)) {
           totalSum += tx.amount;
         }
@@ -45,9 +45,9 @@ class WeeklyChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: EdgeInsets.all(16),
+      margin: const EdgeInsets.all(16),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: _groupedTransactionValues.map((element) {
