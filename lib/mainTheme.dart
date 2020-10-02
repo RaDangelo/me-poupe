@@ -6,9 +6,9 @@ class MainTheme {
   ThemeData get themeData {
     return ThemeData(
         fontFamily: 'Quicksand',
-        primarySwatch: Colors.purple,
-        accentColor: Colors.purpleAccent,
-        textTheme: ThemeData.light().textTheme.copyWith(
+        primarySwatch: Colors.black26,
+        accentColor: Colors.purple,
+        textTheme: ThemeData.dark().textTheme.copyWith(
               headline6: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 16,
@@ -18,7 +18,7 @@ class MainTheme {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
         appBarTheme: AppBarTheme(
-            textTheme: ThemeData.light().textTheme.copyWith(
+            textTheme: ThemeData.dark().textTheme.copyWith(
                 headline6: TextStyle(
                     fontFamily: 'OpenSans',
                     fontSize: 20,
